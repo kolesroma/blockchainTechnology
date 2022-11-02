@@ -11,7 +11,8 @@ public class Blockchain {
     private final List<Transaction> currentTransactions = new ArrayList<>();
 
     public Blockchain() {
-        newBlock(100, "0");
+        newBlock(271102, "kolesnyk");
+        newBlock(271102, "kolesnyk");
     }
 
     /**
@@ -50,7 +51,7 @@ public class Blockchain {
         return encrypt(hashingInput);
     }
 
-    private static String encrypt(String src) {
+    public static String encrypt(String src) {
         return Hashing.sha256()
                 .hashString(src, StandardCharsets.UTF_8)
                 .toString();
@@ -78,7 +79,7 @@ public class Blockchain {
 
     /**
      * Підтвердження доказу:
-     * Чи містить hash(lastProof, proof) 4 заголовних нуля
+     * Чи містить hash(lastProof, proof) 271102
      */
     private boolean isProofValid(int lastProof, int proof) {
         String guessString = lastProof + "" + proof;
