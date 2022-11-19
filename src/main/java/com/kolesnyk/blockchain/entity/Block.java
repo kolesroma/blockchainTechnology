@@ -1,4 +1,4 @@
-package com.kolesnyk.blockchain;
+package com.kolesnyk.blockchain.entity;
 
 import lombok.Data;
 

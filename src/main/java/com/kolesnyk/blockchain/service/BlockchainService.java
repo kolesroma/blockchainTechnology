@@ -1,4 +1,7 @@
-package com.kolesnyk.blockchain;
+package com.kolesnyk.blockchain.service;
+
+import com.kolesnyk.blockchain.entity.Block;
+import com.kolesnyk.blockchain.entity.Blockchain;
 
 public class BlockchainService {
     /**

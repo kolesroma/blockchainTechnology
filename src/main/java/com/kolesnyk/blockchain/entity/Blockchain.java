@@ -1,4 +1,4 @@
-package com.kolesnyk.blockchain;
+package com.kolesnyk.blockchain.entity;
 
 import com.google.common.hash.Hashing;
 import lombok.ToString;
@@ -16,13 +16,6 @@ public class Blockchain {
         newBlock(2711, "kolesnyk");
     }
 
-    /**
-     * add Block to chain
-     *
-     * @param proof        Докази проведенної роботи
-     * @param previousHash Хеш попереднього блока
-     * @return Новий блок
-     */
     public Block newBlock(int proof, String previousHash) {
         List<Transaction> copyOfTransactions = new ArrayList<>(currentTransactions);
         Block newBlock = new Block(chain.size(), proof, previousHash, copyOfTransactions);
@@ -31,14 +24,6 @@ public class Blockchain {
         return newBlock;
     }
 
-    /**
-     * Направляє нову транзакцію в наступний блок
-     *
-     * @param sender    Адреса відправника
-     * @param recipient Адреса отримувача
-     * @param amount    Сума
-     * @return Індекс блока, що буде зберігати цю транзакцію
-     */
     public int newTransaction(String sender, String recipient, int amount) {
         currentTransactions.add(new Transaction(sender, recipient, amount));
         return chain.size();
@@ -52,7 +37,7 @@ public class Blockchain {
         return encrypt(hashingInput);
     }
 
-    public static String encrypt(String src) {
+    private static String encrypt(String src) {
         return Hashing.sha256()
                 .hashString(src, StandardCharsets.UTF_8)
                 .toString();
