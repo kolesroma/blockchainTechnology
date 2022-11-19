@@ -1,18 +1,19 @@
 package com.kolesnyk.blockchain;
 
 import com.google.common.hash.Hashing;
+import lombok.ToString;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+@ToString
 public class Blockchain {
     private final List<Block> chain = new ArrayList<>();
     private final List<Transaction> currentTransactions = new ArrayList<>();
 
     public Blockchain() {
-        newBlock(271102, "kolesnyk");
-        newBlock(271102, "kolesnyk");
+        newBlock(2711, "kolesnyk");
     }
 
     /**
@@ -63,27 +64,19 @@ public class Blockchain {
                 : null;
     }
 
-    /**
-     * Проста перевірка алгоритму: Пошук числа p`, так як hash(pp`) містить 4
-     * заголовних нуля, де p — попередній p є попереднім доказом, а p` - новим
-     *
-     * @return int
-     */
-    public int proofOfWork(int lastProofOfWork) {
-        int proof = 0;
-        while (!isProofValid(lastProofOfWork, proof)) {
-            proof++;
+    public static int findProof(Block currentBlock) {
+        int newProof = 0;
+        while (!isProofValid(currentBlock, newProof)) {
+            newProof++;
         }
-        return proof;
+        return newProof;
     }
 
-    /**
-     * Підтвердження доказу:
-     * Чи містить hash(lastProof, proof) 271102
-     */
-    private boolean isProofValid(int lastProof, int proof) {
-        String guessString = lastProof + "" + proof;
-        String guessHash = encrypt(guessString);
-        return guessHash.endsWith("271102");
+    private static boolean isProofValid(Block currentBlock, int newProof) {
+        String guessString = currentBlock.getIndex() +
+                currentBlock.getTimestamp() +
+                newProof +
+                currentBlock.getPreviousHash();
+        return encrypt(guessString).endsWith("2711");
     }
 }
